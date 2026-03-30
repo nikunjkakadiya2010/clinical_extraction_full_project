@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.1",
+  "description": "Structured output template for extracted data from a single input document. Includes provenance, page numbers, MEAT evidence and LLM candidate outputs.",
+  "document_meta": {
+    "document_id": "",
+    "document_name": "",
+    "source_file": "",
+    "document_type": "",
+    "extraction_timestamp": "",
+    "ocr_confidence": null,
+    "pages": null
+  },
+  "sections": {
+    "chief_complaint": {"text": "", "page": null, "char_range": null},
+    "history_of_present_illness": {"text": "", "page": null, "char_range": null},
+    "review_of_systems": {"text": "", "page": null, "char_range": null},
+    "physical_exam": {"text": "", "page": null, "char_range": null},
+    "assessment_and_plan": {"text": "", "page": null, "char_range": null},
+    "problem_list": {"text": "", "page": null, "char_range": null},
+    "past_medical_history": {"text": "", "page": null, "char_range": null},
+    "past_surgical_history": {"text": "", "page": null, "char_range": null},
+    "medications": {"items": [], "page": null},
+    "allergies": {"items": [], "page": null},
+    "vitals": {"structured": {}, "page": null},
+    "labs": {"items": [], "tables": []},
+    "imaging_and_tests": {"items": []},
+    "procedures": {"items": []},
+    "health_maintenance": {"text": "", "items": []},
+    "social_history": {"text": ""},
+    "family_history": {"text": ""}
+  },
+  "entities": {
+    "diagnoses": [
+      {
+        "id": "diag_1",
+        "text": "Type 2 diabetes mellitus with diabetic chronic kidney disease",
+        "section": "problem_list",
+        "section_page": 3,
+        "char_offsets": [1024, 1079],
+        "attributes": {
+          "status": "active",
+          "onset_date": "2024-01-24",
+          "laterality": "unspecified",
+          "severity": "moderate",
+          "meat_evidence": {
+            "medication": ["Metformin 1000 mg BID", "Jardiance 10 mg daily"],
+            "lab": ["A1c 6.5% 12/23/2024"],
+            "test": ["eGFR 74 12/23/2024"]
+          }
+        },
+        "normalization": {
+          "preferred_term": "Type 2 diabetes mellitus",
+          "vocabulary": "SNOMED-CT",
+          "concept_id": "44054006",
+          "normalization_confidence": 0.92
+        },
+        "icd10_mapping": [
+          {"code": "E11.22", "preferred": true, "confidence": 0.86},
+          {"code": "E11.9", "preferred": false, "confidence": 0.34}
+        ],
+        "provenance": {
+          "text_snippet": "Type 2 Diabetes Mellitus with diabetic chronic kidney disease - Active 01/24/2024",
+          "page": 3,
+          "provider_section_anchor": "Problem List",
+          "extraction_id": "ext-2025-12-10-0001"
+        },
+        "confidence": 0.88
+      }
+    ]
+  },
+  "medications": [
+    {
+      "id": "med_1",
+      "name": "metformin",
+      "dose": "1000 mg",
+      "frequency": "BID",
+      "route": "oral",
+      "start_date": null,
+      "prescribed_by": null,
+      "provenance": {"page": 2, "text_sample": "metformin 1000 mg tablet tab oral 180"}
+    }
+  ],
+  "allergies": [
+    {
+      "id": "all_1",
+      "substance": "Amoxicillin",
+      "reaction": "Diarrhea",
+      "severity": null,
+      "provenance": {"page": 2, "text_sample": "Amoxicillin Diarrhea 01/08/2024"}
+    }
+  ],
+  "labs": [
+    {
+      "id": "lab_1",
+      "test_name": "Hemoglobin A1c",
+      "value": "6.5",
+      "units": "%",
+      "date": "2024-12-23",
+      "provenance": {"page": 6, "table_id": 1}
+    }
+  ],
+  "icd10_summary": {
+    "primary_diagnosis_candidates": [
+      {"text": "Type 2 diabetes mellitus with diabetic chronic kidney disease", "icd10": "E11.22", "confidence": 0.86}
+    ],
+    "all_mappings": [
+      {"entity_id": "diag_1", "icd10_candidates": [{"code": "E11.22", "confidence": 0.86}, {"code": "E11.9", "confidence": 0.34}]}
+    ]
+  },
+  "llm_outputs": {
+    "raw_diagnosis_terms": {},
+    "icd10_candidates": {},
+    "normalization_candidates": {},
+    "validation_notes": []
+  },
+  "post_processing": {
+    "deduplication_log": [],
+    "meat_assessments": [
+      {
+        "entity_id": "diag_1",
+        "meat_score": 0.8,
+        "evidence_summary": {
+          "medications": ["metformin", "jardiance"],
+          "labs": ["A1c 6.5%"],
+          "tests": ["eGFR 74"]
+        }
+      }
+    ]
+  },
+  "extraction_summary": {
+    "num_entities": 12,
+    "num_diagnoses": 8,
+    "num_medications": 26,
+    "confidence_overall": 0.78,
+    "errors": []
+  }
+}
